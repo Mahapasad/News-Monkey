@@ -102,25 +102,15 @@ export class News extends Component {
     return (
       <div className='container my-3'>
         <h1 className='text-center'>`News monkey - Top {this.capitalizeFirstLetter(this.props.category)} Headlines `</h1>
-          {/* { this.state.loading && <Spinner/>} */}
-        
-          <InfiniteScroll
-          dataLength={this.state.articles.length}
-          next={this.fetchMoreData}
-          hasMore={this.state.articles.length !== this.state.totalResults}
-          loader={<Spinner/>} 
-        >
+          { this.state.loading && <Spinner/>} 
+   
         <div className="row">
-        {this.state.articles.map((element)=>{
+        {!this.start.loading && this.state.articles.map((element)=>{
           return <div className="col-md-4" key={element.url}>
           <NewsItem date = {element.publishedAt} source={element.source.name} author={element.author} title={element.title?element.title:""} description={element.description?element.description:""} imageUrl={element.urlToImage} newsUrl= {element.url} />
           </div>
         })}
-        
-        
-        
         </div>
-        </InfiniteScroll>
         <div className="container d-flex justify-content-between">
         <button disabled={this.state.page<=1} type="button" className="btn btn-dark" onClick={this.handlePrevClick}>&larr; Previous</button>
         <button  disabled={this.state.page +1 > Math.ceil(this.state.totalArticles/this.props.pageSize)} type="button" className="btn btn-dark" onClick={this.handleNextClick}>Next &rarr;</button>
